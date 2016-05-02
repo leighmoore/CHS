@@ -9,16 +9,20 @@
 *********************************************;
 
 
-
+/*Creating a macro to run weighted univariate and bivariate analyses*/
 **************
 	ANALAYZING VARIABLES AND SENDING OUTPUT TO .DOC;
 %macro catvar(title,dataset,catvar);
+
+
 ods rtf toc_data;
 ods noptitle;
 ods proclabel=&title;
+
 proc sort data = &dataset;
 	by &catvar;
 run;
+
 proc surveyfreq data=&dataset varmethod=jackknife nosummary; 
 	weight rakedw0; 
 	repweight rakedw1--rakedw80/JKCOEFS=1;
